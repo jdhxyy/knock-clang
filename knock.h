@@ -21,7 +21,7 @@
 typedef void (*KncokCallbackFunc)(uint8_t* req, int reqLen, uint8_t** resp, int* respLen, va_list argp);
 
 // KnockLoad 模块载入.如果不调用本函数,模块会申请默认内存id
-void KnockLoad(int mid);
+bool KnockLoad(int mid);
 
 // KnockCall 同步调用
 // resp和respLen是应答字节流和字节流长度.注意resp需要释放.如果resp为NULL或者respLen为0表示无应答
@@ -29,6 +29,6 @@ void KnockLoad(int mid);
 void KnockCall(uint16_t protocol, uint16_t cmd, uint8_t* req, int reqLen, uint8_t** resp, int* respLen, ...);
 
 // KnockRegister 注册服务回调函数
-void KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback);
+bool KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback);
 
 #endif

@@ -27,14 +27,16 @@ static tItem* getItem(uint32_t rid);
 static TZListNode* createNode(void);
 
 // KnockLoad 模块载入.如果不调用本函数,模块会申请默认内存id
-void KnockLoad(int mid) {
+bool KnockLoad(int mid) {
     if (list == 0) {
         gMid = mid;
         list = TZListCreateList(gMid);
         if (list == 0) {
             LE(KNOCK_TAG, "load failed!create list failed!");
+            return false;
         }
     }
+    return true;
 }
 
 // KnockCall 同步调用
@@ -54,13 +56,13 @@ void KnockCall(uint16_t protocol, uint16_t cmd, uint8_t* req, int reqLen, uint8_
 }
 
 // KnockRegister 注册服务回调函数
-void KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback) {
+bool KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback) {
     if (list == 0) {
         gMid = TZMallocRegister(0, KNOCK_TAG, KNOCK_TZMALLOC_SIZE);
         list = TZListCreateList(gMid);
         if (list == 0) {
             LE(KNOCK_TAG, "register failed!create list failed!");
-            return;
+            return false;
         }
     }
 
@@ -70,18 +72,19 @@ void KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback) 
         // 已存在,则替换回调函数
         LW(KNOCK_TAG, "replace callback.protocol:%d cmd:%d", protocol, cmd);
         item->callback = callback;
-        return;
+        return true;
     }
 
     TZListNode* node = createNode();
     if (node == NULL) {
         LE(KNOCK_TAG, "register failed!create node failed!");
-        return;
+        return false;
     }
     item = (tItem*)node->Data;
     item->rid = rid;
     item->callback = callback;
     TZListAppend(list, node);
+    return true;
 }
 
 static tItem* getItem(uint32_t rid) {
