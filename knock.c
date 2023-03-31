@@ -1,6 +1,6 @@
 // Copyright 2021-2021 The jdh99 Authors. All rights reserved.
-// knock°üÓÃÓÚÍ¨ĞÅÊ±Ö¡Í·ºÍÖ¡ÕıÎÄ´¦Àí½âñî
-// Ö¡ÕıÎÄ´¦Àíº¯Êı×¢²á³Éknock°üµÄ·şÎñ,Ö¡Í·´¦Àíµ÷ÓÃ·şÎñ,µ÷ÓÃknock·şÎñ»ñÈ¡ÏìÓ¦Êı¾İ
+// knockåŒ…ç”¨äºé€šä¿¡æ—¶å¸§å¤´å’Œå¸§æ­£æ–‡å¤„ç†è§£è€¦
+// å¸§æ­£æ–‡å¤„ç†å‡½æ•°æ³¨å†ŒæˆknockåŒ…çš„æœåŠ¡,å¸§å¤´å¤„ç†è°ƒç”¨æœåŠ¡,è°ƒç”¨knockæœåŠ¡è·å–å“åº”æ•°æ®
 // Authors: jdh99 <jdh821@163.com>
 
 #include "knock.h"
@@ -26,7 +26,7 @@ static int gMid = -1;
 static tItem* getItem(uint32_t rid);
 static TZListNode* createNode(void);
 
-// KnockLoad Ä£¿éÔØÈë.Èç¹û²»µ÷ÓÃ±¾º¯Êı,Ä£¿é»áÉêÇëÄ¬ÈÏÄÚ´æid
+// KnockLoad æ¨¡å—è½½å…¥.å¦‚æœä¸è°ƒç”¨æœ¬å‡½æ•°,æ¨¡å—ä¼šç”³è¯·é»˜è®¤å†…å­˜id
 bool KnockLoad(int mid) {
     if (list == 0) {
         gMid = mid;
@@ -39,9 +39,9 @@ bool KnockLoad(int mid) {
     return true;
 }
 
-// KnockCall Í¬²½µ÷ÓÃ
-// respºÍrespLenÊÇÓ¦´ğ×Ö½ÚÁ÷ºÍ×Ö½ÚÁ÷³¤¶È.×¢ÒârespĞèÒªÊÍ·Å.Èç¹ûrespÎªNULL»òÕßrespLenÎª0±íÊ¾ÎŞÓ¦´ğ
-// Ö§³Ö¿É±ä²ÎÊı.²ÎÊı¸ñÊ½ºÍÊıÁ¿ÓÉµ÷ÓÃË«·½Ô¼¶¨
+// KnockCall åŒæ­¥è°ƒç”¨
+// respå’ŒrespLenæ˜¯åº”ç­”å­—èŠ‚æµå’Œå­—èŠ‚æµé•¿åº¦.æ³¨æ„respéœ€è¦é‡Šæ”¾.å¦‚æœrespä¸ºNULLæˆ–è€…respLenä¸º0è¡¨ç¤ºæ— åº”ç­”
+// æ”¯æŒå¯å˜å‚æ•°.å‚æ•°æ ¼å¼å’Œæ•°é‡ç”±è°ƒç”¨åŒæ–¹çº¦å®š
 void KnockCall(uint16_t protocol, uint16_t cmd, uint8_t* req, int reqLen, uint8_t** resp, int* respLen, ...) {
     uint32_t rid = (uint32_t)(cmd + (protocol << 16));
     tItem* item = getItem(rid);
@@ -55,7 +55,7 @@ void KnockCall(uint16_t protocol, uint16_t cmd, uint8_t* req, int reqLen, uint8_
     va_end(argp);
 }
 
-// KnockRegister ×¢²á·şÎñ»Øµ÷º¯Êı
+// KnockRegister æ³¨å†ŒæœåŠ¡å›è°ƒå‡½æ•°
 bool KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback) {
     if (list == 0) {
         gMid = TZMallocRegister(0, KNOCK_TAG, KNOCK_TZMALLOC_SIZE);
@@ -69,7 +69,7 @@ bool KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback) 
     uint32_t rid = (uint32_t)(cmd + (protocol << 16));
     tItem* item = getItem(rid);
     if (item != NULL) {
-        // ÒÑ´æÔÚ,ÔòÌæ»»»Øµ÷º¯Êı
+        // å·²å­˜åœ¨,åˆ™æ›¿æ¢å›è°ƒå‡½æ•°
         LW(KNOCK_TAG, "replace callback.protocol:%d cmd:%d", protocol, cmd);
         item->callback = callback;
         return true;

@@ -1,6 +1,6 @@
 // Copyright 2021-2021 The jdh99 Authors. All rights reserved.
-// knock°üÓÃÓÚÍ¨ĞÅÊ±Ö¡Í·ºÍÖ¡ÕıÎÄ´¦Àí½âñî
-// Ö¡ÕıÎÄ´¦Àíº¯Êı×¢²á³Éknock°üµÄ·şÎñ,Ö¡Í·´¦Àíµ÷ÓÃ·şÎñ,µ÷ÓÃknock·şÎñ»ñÈ¡ÏìÓ¦Êı¾İ
+// knockåŒ…ç”¨äºé€šä¿¡æ—¶å¸§å¤´å’Œå¸§æ­£æ–‡å¤„ç†è§£è€¦
+// å¸§æ­£æ–‡å¤„ç†å‡½æ•°æ³¨å†ŒæˆknockåŒ…çš„æœåŠ¡,å¸§å¤´å¤„ç†è°ƒç”¨æœåŠ¡,è°ƒç”¨knockæœåŠ¡è·å–å“åº”æ•°æ®
 // Authors: jdh99 <jdh821@163.com>
 
 #ifndef KNOCK_H
@@ -10,25 +10,25 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-// ÓÃ»§Èç¹û²»µ÷ÓÃÔØÈëº¯Êı´«µİÄÚ´æid,ÔòÄ£¿é»áÔÚÊ¹ÓÃÊ±×ÔÖ÷ÉêÇëÄÚ´æid
+// ç”¨æˆ·å¦‚æœä¸è°ƒç”¨è½½å…¥å‡½æ•°ä¼ é€’å†…å­˜id,åˆ™æ¨¡å—ä¼šåœ¨ä½¿ç”¨æ—¶è‡ªä¸»ç”³è¯·å†…å­˜id
 #define KNOCK_TAG "knock"
 #define KNOCK_TZMALLOC_SIZE 4096
 
-// KncokCallbackFunc ×¢²á·şÎñ»Øµ÷º¯Êı
-// ×ñÑ­Ë­µ÷ÓÃË­ÊÍ·ÅÔ­Ôò,respĞèÒªÓÉ»Øµ÷º¯ÊıÊ¹ÓÃTZMalloc¿ª±Ù¿Õ¼ä,µ÷ÓÃ·½¸ºÔğÊÍ·Å
-// respÎªNULL»òÕßrespLenÎª0±íÊ¾²»ĞèÒªÓ¦´ğ
-// argpÊÇ¿É±ä²ÎÊı,²ÎÊı¸ñÊ½ºÍÊıÁ¿ÓÉµ÷ÓÃË«·½Ô¼¶¨
+// KncokCallbackFunc æ³¨å†ŒæœåŠ¡å›è°ƒå‡½æ•°
+// éµå¾ªè°è°ƒç”¨è°é‡Šæ”¾åŸåˆ™,respéœ€è¦ç”±å›è°ƒå‡½æ•°ä½¿ç”¨TZMallocå¼€è¾Ÿç©ºé—´,è°ƒç”¨æ–¹è´Ÿè´£é‡Šæ”¾
+// respä¸ºNULLæˆ–è€…respLenä¸º0è¡¨ç¤ºä¸éœ€è¦åº”ç­”
+// argpæ˜¯å¯å˜å‚æ•°,å‚æ•°æ ¼å¼å’Œæ•°é‡ç”±è°ƒç”¨åŒæ–¹çº¦å®š
 typedef void (*KncokCallbackFunc)(uint8_t* req, int reqLen, uint8_t** resp, int* respLen, va_list argp);
 
-// KnockLoad Ä£¿éÔØÈë.Èç¹û²»µ÷ÓÃ±¾º¯Êı,Ä£¿é»áÉêÇëÄ¬ÈÏÄÚ´æid
+// KnockLoad æ¨¡å—è½½å…¥.å¦‚æœä¸è°ƒç”¨æœ¬å‡½æ•°,æ¨¡å—ä¼šç”³è¯·é»˜è®¤å†…å­˜id
 bool KnockLoad(int mid);
 
-// KnockCall Í¬²½µ÷ÓÃ
-// respºÍrespLenÊÇÓ¦´ğ×Ö½ÚÁ÷ºÍ×Ö½ÚÁ÷³¤¶È.×¢ÒârespĞèÒªÊÍ·Å.Èç¹ûrespÎªNULL»òÕßrespLenÎª0±íÊ¾ÎŞÓ¦´ğ
-// Ö§³Ö¿É±ä²ÎÊı.²ÎÊı¸ñÊ½ºÍÊıÁ¿ÓÉµ÷ÓÃË«·½Ô¼¶¨
+// KnockCall åŒæ­¥è°ƒç”¨
+// respå’ŒrespLenæ˜¯åº”ç­”å­—èŠ‚æµå’Œå­—èŠ‚æµé•¿åº¦.æ³¨æ„respéœ€è¦é‡Šæ”¾.å¦‚æœrespä¸ºNULLæˆ–è€…respLenä¸º0è¡¨ç¤ºæ— åº”ç­”
+// æ”¯æŒå¯å˜å‚æ•°.å‚æ•°æ ¼å¼å’Œæ•°é‡ç”±è°ƒç”¨åŒæ–¹çº¦å®š
 void KnockCall(uint16_t protocol, uint16_t cmd, uint8_t* req, int reqLen, uint8_t** resp, int* respLen, ...);
 
-// KnockRegister ×¢²á·şÎñ»Øµ÷º¯Êı
+// KnockRegister æ³¨å†ŒæœåŠ¡å›è°ƒå‡½æ•°
 bool KnockRegister(uint16_t protocol, uint16_t cmd, KncokCallbackFunc callback);
 
 #endif
